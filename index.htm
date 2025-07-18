@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700&display=swap" rel="stylesheet">
+  <title>Dr.WEEE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-font {
+      font-family: 'Sacramento', cursive;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Card Container -->
+  <div class="relative bg-white rounded-3xl ring-1 ring-gray-200 shadow-xl px-10 pt-24 pb-14 w-[520px] min-h-[600px] text-center z-0 overflow-hidden">
+
+    <!-- Animated Logo Circle with Arabic Text -->
+    <div class="absolute top-6 left-6 w-28 h-28 bg-white rounded-full shadow-lg flex flex-col items-center justify-center animate-float z-50">
+      <img src="https://i.ibb.co/MyRX06f5/302086611-516662203794655-147753868285345415-n-1.png" alt="Dr.WEEE Logo" class="w-16 h-16 object-contain mb-1" />
+      <span class="text-green-700 font-bold text-sm" style="font-family: 'Tajawal', sans-serif;">دكتور وي</span>
+    </div>
+
+    <!-- Content -->
+    <div class="mt-8 space-y-10">
+      <p class="uppercase text-sm font-semibold text-gray-500 tracking-wide">We're Still</p>
+      <h2 class="text-3xl font-bold text-green-700">Cooking Our Website.</h2>
+      <p class="text-gray-600">We are going to launch our website Very Soon.<br/>Stay Tuned.</p>
+
+      <!-- Slider Trigger -->
+      <div class="relative w-[300px] h-14 bg-gradient-to-r from-green-500 to-white rounded-full border border-gray-300 flex items-center px-4 mx-auto mt-4">
+        <span class="absolute left-1/2 transform -translate-x-1/2 text-sm font-semibold text-white z-10 pointer-events-none">
+          NOTIFY ME
+        </span>
+        <div id="sliderHandle"
+          class="bg-white w-14 h-14 rounded-full shadow flex items-center justify-center cursor-pointer transition-transform duration-300 z-20"
+          style="position: absolute; left: 0;">
+          <svg class="w-6 h-6 fill-green-600" viewBox="0 0 24 24">
+            <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zM4 8l8 5 8-5M4 18V8l8 5 8-5v10H4z"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Social Icons -->
+      <div class="mt-10 flex justify-center gap-6">
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/DrWEEE/" target="_blank" class="text-blue-600 hover:text-blue-800 transition">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M22 12a10 10 0 10-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.4 3h-1.8v7A10 10 0 0022 12z"/>
+          </svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="text-blue-700 hover:text-blue-900 transition">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 0h-14c-2.8 0-5 2.2-5 5v14c0 2.8 2.2 5 5 5h14c2.8 0 5-2.2 5-5v-14c0-2.8-2.2-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.3c-1 0-1.7-.8-1.7-1.7s.8-1.7 1.7-1.7 1.7.8 1.7 1.7-.8 1.7-1.7 1.7zm13.5 11.3h-3v-5.6c0-1.3-.5-2.2-1.6-2.2-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8v5.8h-3v-10h3v1.4c.4-.7 1.2-1.4 2.6-1.4 1.9 0 3.3 1.3 3.3 4v6z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Sliding Form Panel -->
+    <div id="notifyPanel"
+      class="absolute top-0 left-0 w-full h-full bg-white rounded-[40px] px-6 py-10 shadow-lg transform translate-x-full transition-transform duration-500 ease-in-out z-20 flex flex-col items-center justify-center text-center space-y-6">
+
+      <h3 class="text-xl font-semibold text-green-700">Get Notified</h3>
+
+      <form id="emailForm" class="flex flex-col items-center gap-4 w-full max-w-xs">
+        <input type="text" name="name" placeholder="Enter your name" required
+          class="px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full text-sm" />
+
+        <input type="email" name="email" placeholder="Enter your email" required
+          class="px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full text-sm" />
+
+        <button type="submit"
+          class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-full shadow transition">
+          Submit
+        </button>
+      </form>
+
+      <p id="responseMsg" class="text-sm text-green-700 hidden">Thank you! You’ll be notified.</p>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const sliderHandle = document.getElementById("sliderHandle");
+    const notifyPanel = document.getElementById("notifyPanel");
+    const emailForm = document.getElementById("emailForm");
+    const responseMsg = document.getElementById("responseMsg");
+
+    let isDragging = false;
+    let startX = 0;
+
+    sliderHandle.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.clientX;
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      let deltaX = e.clientX - startX;
+      deltaX = Math.max(0, Math.min(deltaX, 300));
+      sliderHandle.style.left = `${deltaX}px`;
+
+      if (deltaX > 200) {
+        notifyPanel.classList.remove("translate-x-full");
+        sliderHandle.style.left = `0px`;
+        isDragging = false;
+      }
+    });
+
+    document.addEventListener("mouseup", () => {
+      if (isDragging) {
+        sliderHandle.style.left = `0px`;
+        isDragging = false;
+      }
+    });
+
+    emailForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+            const name = emailForm.name.value;
+      const email = emailForm.email.value;
+
+      const webhookURL = "https://script.google.com/macros/s/AKfycbyTsxhfNN-GF5-NunI3wkl0f_E-lpnvXWcy9TOo_Aqm-Zu8N9al3wS0gf3vyLe3CtE/exec";
+
+      try {
+        await fetch(webhookURL, {
+          method: "POST",
+          body: new URLSearchParams({ name, email }),
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        });
+        responseMsg.classList.remove("hidden");
+        responseMsg.textContent = "Thank you! You’ll be notified.";
+        emailForm.reset();
+      } catch (error) {
+        responseMsg.textContent = "Something went wrong. Try again.";
+        responseMsg.classList.remove("hidden");
+        responseMsg.classList.add("text-red-600");
+      }
+    });
+  </script>
+</body>
+</html>
