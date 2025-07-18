@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,6 +9,11 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background: #FFFFFF;
@@ -18,7 +23,6 @@
       justify-content: center;
       padding: 2rem;
       position: relative;
-      overflow: hidden;
     }
 
     .logo-font {
@@ -33,6 +37,12 @@
 
     .animate-float {
       animation: float 4s ease-in-out infinite;
+    }
+
+    @media (max-width: 480px) {
+      #notifyPanel {
+        max-height: 90vh;
+      }
     }
   </style>
 </head>
@@ -60,7 +70,7 @@
         </span>
         <div id="sliderHandle"
           class="bg-white w-14 h-14 rounded-full shadow flex items-center justify-center cursor-pointer transition-transform duration-300 z-20"
-          style="position: absolute; left: 0;">
+          style="position: absolute; left: 0;" aria-label="Slide to open form">
           <svg class="w-6 h-6 fill-green-600" viewBox="0 0 24 24">
             <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zM4 8l8 5 8-5M4 18V8l8 5 8-5v10H4z"/>
           </svg>
@@ -87,7 +97,7 @@
 
     <!-- Sliding Form Panel -->
     <div id="notifyPanel"
-      class="absolute top-0 left-0 w-full h-full bg-white rounded-[40px] px-6 py-10 shadow-lg transform translate-x-full transition-transform duration-500 ease-in-out z-20 flex flex-col items-center justify-center text-center space-y-6">
+      class="absolute top-0 left-0 w-full h-full bg-white rounded-[40px] px-6 py-10 shadow-lg transform translate-x-full transition-transform duration-500 ease-in-out z-20 flex flex-col items-center justify-center text-center space-y-6 overflow-y-auto">
 
       <h3 class="text-xl font-semibold text-green-700">Get Notified</h3>
 
@@ -118,6 +128,7 @@
     let isDragging = false;
     let startX = 0;
 
+    // Desktop drag
     sliderHandle.addEventListener("mousedown", (e) => {
       isDragging = true;
       startX = e.clientX;
@@ -126,7 +137,7 @@
     document.addEventListener("mousemove", (e) => {
       if (!isDragging) return;
       let deltaX = e.clientX - startX;
-      deltaX = Math.max(0, Math.min(deltaX, 300));
+      deltaX = Math.max(0, Math.min(deltaX,300));
       sliderHandle.style.left = `${deltaX}px`;
 
       if (deltaX > 200) {
@@ -143,12 +154,39 @@
       }
     });
 
+    // Touch drag support
+    sliderHandle.addEventListener("touchstart", (e) => {
+      isDragging = true;
+      startX = e.touches[0].clientX;
+    });
+
+    document.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+      let deltaX = e.touches[0].clientX - startX;
+      deltaX = Math.max(0, Math.min(deltaX, 300));
+      sliderHandle.style.left = `${deltaX}px`;
+
+      if (deltaX > 200) {
+        notifyPanel.classList.remove("translate-x-full");
+        sliderHandle.style.left = `0px`;
+        isDragging = false;
+      }
+    });
+
+    document.addEventListener("touchend", () => {
+      if (isDragging) {
+        sliderHandle.style.left = `0px`;
+        isDragging = false;
+      }
+    });
+
+    // Form submission
     emailForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-            const name = emailForm.name.value;
-      const email = emailForm.email.value;
+      const name = emailForm.name.value.trim();
+      const email = emailForm.email.value.trim();
 
-      const webhookURL = "https://script.google.com/macros/s/AKfycbyTsxhfNN-GF5-NunI3wkl0f_E-lpnvXWcy9TOo_Aqm-Zu8N9al3wS0gf3vyLe3CtE/exec?name=Test&email=test@example.com";
+      const webhookURL = "https://script.google.com/macros/s/AKfycbyTsxhfNN-GF5-NunI3wkl0f_E-lpnvXWcy9TOo_Aqm-Zu8N9al3wS0gf3vyLe3CtE/exec";
 
       try {
         await fetch(webhookURL, {
@@ -156,15 +194,17 @@
           body: new URLSearchParams({ name, email }),
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         });
-        responseMsg.classList.remove("hidden");
-        responseMsg.textContent = "Thank you! You’ll be notified.";
+        responseMsg.textContent = "✅ Thank you! You’ll be notified.";
+        responseMsg.classList.remove("hidden", "text-red-600");
+        responseMsg.classList.add("text-green-700");
         emailForm.reset();
       } catch (error) {
-        responseMsg.textContent = "Something went wrong. Try again.";
-        responseMsg.classList.remove("hidden");
+        responseMsg.textContent = "❌ Something went wrong. Try again.";
+        responseMsg.classList.remove("hidden", "text-green-700");
         responseMsg.classList.add("text-red-600");
       }
     });
   </script>
+
 </body>
 </html>
