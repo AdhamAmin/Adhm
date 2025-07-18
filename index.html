@@ -148,7 +148,7 @@
             const name = emailForm.name.value;
       const email = emailForm.email.value;
 
-      const webhookURL = "https://script.google.com/macros/s/AKfycbyTsxhfNN-GF5-NunI3wkl0f_E-lpnvXWcy9TOo_Aqm-Zu8N9al3wS0gf3vyLe3CtE/exec";
+      const webhookURL = "https://script.google.com/macros/s/AKfycbyTsxhfNN-GF5-NunI3wkl0f_E-lpnvXWcy9TOo_Aqm-Zu8N9al3wS0gf3vyLe3CtE/exec?name=Test&email=test@example.com";
 
       try {
         await fetch(webhookURL, {
